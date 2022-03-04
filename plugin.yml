@@ -4,3 +4,15 @@ api: 3.0.0
 description: AlmaDeath Plugin
 version: 1.0.0
 author: zOmArRD
+
+permissions:
+  alma.command.create:
+    default: op
+  alma.command.edit:
+    default: op
+  alma.command.setpay:
+    default: op
+  alma.command.give:
+    default: op
+  alma.command.list:
+    default: true

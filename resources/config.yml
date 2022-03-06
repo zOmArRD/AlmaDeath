@@ -1,0 +1,17 @@
+#########################################################################
+# Created by PhpStorm.                                                  #
+#                                                                       #
+# User: zOmArRD                                                         #
+# Date: 6/3/2022                                                        #
+#                                                                       #
+# Copyright © 2022 zOmArRD (omar@ghostlymc.live) - All Rights Reserved. #
+#########################################################################
+
+prefix: "§cSoul §7>> §r"
+
+# ItemID: "(id):(meta)"
+# name: "(Nombre del item del Alma)"
+AlmaHead:
+  itemID: "397:0"
+  name: "§a{PLAYER-NAME}'s Alma"
+  lore: "§r§cClick para canjear esta alma"

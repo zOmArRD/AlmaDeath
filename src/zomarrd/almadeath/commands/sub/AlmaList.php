@@ -18,6 +18,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 use zomarrd\almadeath\AlmaDeath;
+use zomarrd\almadeath\api\item\AlmaItem;
 use zomarrd\almadeath\permission\PermissionKey;
 
 final class AlmaList extends BaseSubCommand
@@ -26,13 +27,14 @@ final class AlmaList extends BaseSubCommand
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         if (count($args) !== 0 && $sender->hasPermission(PermissionKey::ALMA_COMMAND_LIST)) {
-            $player = strtolower($args["player"]);
-            $sender->sendMessage(PREFIX . TextFormat::GREEN . "{$args["player"]} tiene " . AlmaDeath::getAlmasManager()->getSouls($player) . " almas.");
+            $player = $args["player"];
+            $sender->sendMessage(PREFIX . TextFormat::GREEN . "$player tiene " . AlmaDeath::getAlmasManager()->getSouls($player) . " almas.");
             return;
         }
 
         if ($sender instanceof Player) {
-            $sender->sendMessage(PREFIX . TextFormat::GREEN . "tienes " . AlmaDeath::getAlmasManager()->getSouls(strtolower($sender->getName())) . " almas.");
+            $sender->getInventory()->setItem(0, new AlmaItem());
+            $sender->sendMessage(PREFIX . TextFormat::GREEN . "tienes " . AlmaDeath::getAlmasManager()->getSouls($sender->getName()) . " almas.");
         }
     }
 

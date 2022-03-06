@@ -13,9 +13,11 @@ namespace zomarrd\almadeath;
 
 use Exception;
 use muqsit\invmenu\InvMenuHandler;
+use pocketmine\item\ItemFactory;
 use pocketmine\plugin\PluginBase;
 use pocketmine\plugin\PluginLogger;
 use zomarrd\almadeath\api\AlmasManager;
+use zomarrd\almadeath\api\item\AlmaItem;
 use zomarrd\almadeath\commands\AlmaDeathCommand;
 use zomarrd\almadeath\config\ConfigManager;
 
@@ -37,6 +39,7 @@ final class AlmaDeath extends PluginBase
         self::$almasManager = new AlmasManager();
 
         new ConfigManager();
+        ItemFactory::registerItem(new AlmaItem(), true);
     }
 
     public function onEnable(): void

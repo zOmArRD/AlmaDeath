@@ -25,7 +25,7 @@ class AlmasManager
 
     public function getSouls(string $player): int
     {
-        return $this->getAlmasData()->get($player, 0);
+        return $this->getAlmasData()->get(strtolower($player), 0);
     }
 
     public function getAlmasData(): Config
@@ -35,7 +35,7 @@ class AlmasManager
 
     public function addSoul(string $player): void
     {
-        $this->getAlmasData()->set($player, $this->getSouls($player) + 1);
+        $this->getAlmasData()->set(strtolower($player), $this->getSouls($player) + 1);
         $this->getAlmasData()->save();
     }
 

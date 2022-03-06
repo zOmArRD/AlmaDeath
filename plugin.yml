@@ -15,4 +15,4 @@ permissions:
   alma.command.give:
     default: op
   alma.command.list:
-    default: true
+    default: op

@@ -17,13 +17,13 @@ use pocketmine\command\CommandSender;
 final class AlmaCreate extends BaseSubCommand
 {
 
-    protected function prepare(): void
-    {
-        // TODO: Implement prepare() method.
-    }
-
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         // TODO: Implement onRun() method.
+    }
+
+    protected function prepare(): void
+    {
+        // TODO: Implement prepare() method.
     }
 }

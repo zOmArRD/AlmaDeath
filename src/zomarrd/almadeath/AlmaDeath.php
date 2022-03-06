@@ -11,15 +11,19 @@ declare(strict_types=1);
 
 namespace zomarrd\almadeath;
 
+use Exception;
 use muqsit\invmenu\InvMenuHandler;
 use pocketmine\plugin\PluginBase;
 use pocketmine\plugin\PluginLogger;
+use zomarrd\almadeath\api\AlmasManager;
 use zomarrd\almadeath\commands\AlmaDeathCommand;
+use zomarrd\almadeath\config\ConfigManager;
 
 final class AlmaDeath extends PluginBase
 {
     public static AlmaDeath $instance;
     public static PluginLogger $logger;
+    public static AlmasManager $almasManager;
 
     public static function getInstance(): AlmaDeath
     {
@@ -30,17 +34,26 @@ final class AlmaDeath extends PluginBase
     {
         self::$instance = $this;
         self::$logger = $this->getLogger();
+        self::$almasManager = new AlmasManager();
+
+        new ConfigManager();
     }
 
     public function onEnable(): void
     {
         try {
             InvMenuHandler::register(self::$instance);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             self::$logger->info($exception->getMessage());
         }
 
+        self::getAlmasManager()->init();
         $this->getServer()->getCommandMap()->register('zomarrd', new AlmaDeathCommand(self::$instance));
+    }
+
+    public static function getAlmasManager(): AlmasManager
+    {
+        return self::$almasManager;
     }
 
     public function onDisable(): void
@@ -48,5 +61,10 @@ final class AlmaDeath extends PluginBase
 
         /*TODO: ???*/
         sleep(5);
+    }
+
+    public function getConfigManager(): ConfigManager
+    {
+        return ConfigManager::getInstance();
     }
 }

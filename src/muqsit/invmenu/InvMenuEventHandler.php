@@ -86,9 +86,7 @@ class InvMenuEventHandler implements Listener{
 		$packet = $event->getPacket();
 		if($packet instanceof NetworkStackLatencyPacket){
 			$session = PlayerManager::get($event->getPlayer());
-			if($session !== null){
-				$session->getNetwork()->notify($packet->timestamp);
-			}
+            $session?->getNetwork()->notify($packet->timestamp);
 		}elseif($packet instanceof LoginPacket){
 			self::$cached_device_os[UUID::fromString($packet->clientUUID)->toBinary()] = $packet->clientData["DeviceOS"] ?? -1;
 		}

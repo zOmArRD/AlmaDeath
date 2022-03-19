@@ -23,9 +23,10 @@ class AlmasManager
         $this->almasData = ConfigManager::getInstance()->getFile('players_almas.json', Config::JSON);
     }
 
-    public function getSouls(string $player): int
+    public function addSoul(string $player): void
     {
-        return $this->getAlmasData()->get(strtolower($player), 0);
+        $this->getAlmasData()->set(strtolower($player), $this->getSouls($player) + 1);
+        $this->getAlmasData()->save();
     }
 
     public function getAlmasData(): Config
@@ -33,15 +34,14 @@ class AlmasManager
         return $this->almasData;
     }
 
-    public function addSoul(string $player): void
+    public function getSouls(string $player): int
     {
-        $this->getAlmasData()->set(strtolower($player), $this->getSouls($player) + 1);
-        $this->getAlmasData()->save();
+        return $this->getAlmasData()->get(strtolower($player), 0);
     }
 
-    public function removeSoul(string $player): void
+    public function removeSoul(string $player, int $quantity = 1): void
     {
-        $this->getAlmasData()->set($player, $this->getSouls($player) - 1);
+        $this->getAlmasData()->set(strtolower($player), $this->getSouls($player) - $quantity);
         $this->getAlmasData()->save();
     }
 }

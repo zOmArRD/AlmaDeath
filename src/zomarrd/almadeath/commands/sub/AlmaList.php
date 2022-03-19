@@ -28,12 +28,20 @@ final class AlmaList extends BaseSubCommand
     {
         if (count($args) !== 0 && $sender->hasPermission(PermissionKey::ALMA_COMMAND_LIST)) {
             $player = $args["player"];
-            $sender->sendMessage(PREFIX . TextFormat::GREEN . "$player tiene " . AlmaDeath::getAlmasManager()->getSouls($player) . " almas.");
+            if ($player === "crates" || $player === "crate") {
+                $manager = AlmaDeath::getCrateManager();
+                $sender->sendMessage(sprintf("%s%shay un total de %s crates!\n", PREFIX, TextFormat::GREEN, count($manager->getCrates())));
+                foreach ($manager->getCrates() as $crate) {
+                    $sender->sendMessage(sprintf("- %s", $crate->getName()));
+                }
+            } else {
+                $sender->sendMessage(PREFIX . TextFormat::GREEN . "$player tiene " . AlmaDeath::getAlmasManager()->getSouls($player) . " almas.");
+            }
             return;
         }
 
         if ($sender instanceof Player) {
-            $sender->getInventory()->setItem(0, new AlmaItem());
+            $sender->getInventory()->addItem(new AlmaItem());
             $sender->sendMessage(PREFIX . TextFormat::GREEN . "tienes " . AlmaDeath::getAlmasManager()->getSouls($sender->getName()) . " almas.");
         }
     }

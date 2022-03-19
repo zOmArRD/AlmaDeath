@@ -16,13 +16,15 @@ use pocketmine\command\CommandSender;
 use pocketmine\plugin\Plugin;
 use zomarrd\almadeath\commands\sub\AlmaCreate;
 use zomarrd\almadeath\commands\sub\AlmaEdit;
-use zomarrd\almadeath\commands\sub\AlmaGive;
 use zomarrd\almadeath\commands\sub\AlmaList;
-use zomarrd\almadeath\commands\sub\AlmaSetPay;
+use zomarrd\almadeath\commands\sub\AlmaPlace;
 
 final class AlmaDeathCommand extends BaseCommand
 {
-    public function __construct(Plugin $plugin) { parent::__construct($plugin, 'alma', 'AlmaDeath manager'); }
+    public function __construct(Plugin $plugin)
+    {
+        parent::__construct($plugin, 'alma', 'AlmaDeath manager');
+    }
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
@@ -32,9 +34,9 @@ final class AlmaDeathCommand extends BaseCommand
     protected function prepare(): void
     {
         $this->registerSubCommand(new AlmaCreate('create'));
+        $this->registerSubCommand(new AlmaPlace('place'));
         $this->registerSubCommand(new AlmaEdit('edit'));
-        $this->registerSubCommand(new AlmaSetPay('setpay'));
-        $this->registerSubCommand(new AlmaGive('give'));
+        //$this->registerSubCommand(new AlmaGive('give'));
         $this->registerSubCommand(new AlmaList('list'));
     }
 }

@@ -13,5 +13,5 @@ prefix: "§cSoul §7>> §r"
 # name: "(Nombre del item del Alma)"
 AlmaHead:
   itemID: "397:3"
-  name: "§a{PLAYER-NAME}'s Alma"
-  lore: "§r§cClick para canjear el alma"
+  name: "§l§3º>.§bAlma§3.<º"
+  lore: "§7Pulsa contra el suelo para reclamar"

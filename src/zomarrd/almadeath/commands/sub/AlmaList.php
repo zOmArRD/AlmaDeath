@@ -35,14 +35,8 @@ final class AlmaList extends BaseSubCommand
                     $sender->sendMessage(sprintf("- %s", $crate->getName()));
                 }
             } else {
-                $sender->sendMessage(PREFIX . TextFormat::GREEN . "$player tiene " . AlmaDeath::getAlmasManager()->getSouls($player) . " almas.");
+                $sender->sendMessage(sprintf("%s%s%s tiene %s almas.", PREFIX, TextFormat::GREEN, $player, AlmaDeath::getAlmasManager()->getSouls($player)));
             }
-            return;
-        }
-
-        if ($sender instanceof Player) {
-            $sender->getInventory()->addItem(new AlmaItem());
-            $sender->sendMessage(PREFIX . TextFormat::GREEN . "tienes " . AlmaDeath::getAlmasManager()->getSouls($sender->getName()) . " almas.");
         }
     }
 

@@ -2,7 +2,7 @@ name: AlmaDeath
 main: zomarrd\almadeath\AlmaDeath
 api: 3.0.0
 description: AlmaDeath Plugin
-version: 1.0.0
+version: 1.5.0
 author: zOmArRD
 
 permissions:

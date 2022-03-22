@@ -25,7 +25,6 @@ use zomarrd\almadeath\api\crates\CrateManager;
 use zomarrd\almadeath\api\entity\FloatingText;
 use zomarrd\almadeath\api\events\AlmasListener;
 use zomarrd\almadeath\api\events\CrateListener;
-use zomarrd\almadeath\api\item\AlmaItem;
 use zomarrd\almadeath\commands\AlmaDeathCommand;
 use zomarrd\almadeath\config\ConfigManager;
 
@@ -35,6 +34,8 @@ final class AlmaDeath extends PluginBase
     public static PluginLogger $logger;
     public static AlmasManager $almasManager;
     public static CrateManager $crateManager;
+    /** @var string[] */
+    public static array $itemID;
 
     public static function getInstance(): AlmaDeath
     {
@@ -50,7 +51,6 @@ final class AlmaDeath extends PluginBase
 
         new ConfigManager();
         Entity::registerEntity(FloatingText::class, true);
-        ItemFactory::registerItem(new AlmaItem(), true);
     }
 
     public function onEnable(): void
@@ -73,6 +73,7 @@ final class AlmaDeath extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new CrateListener(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new AlmasListener(), $this);
         $this->getServer()->getCommandMap()->register('zomarrd', new AlmaDeathCommand(self::$instance));
+        self::$itemID = explode(":", ConfigManager::getPluginConfig()->get('AlmaHead', "397:3")['itemID']);
     }
 
     public static function getAlmasManager(): AlmasManager

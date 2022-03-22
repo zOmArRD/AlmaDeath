@@ -15,9 +15,12 @@ use Exception;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\item\Item;
 use pocketmine\Player;
 use zomarrd\almadeath\AlmaDeath;
+use zomarrd\almadeath\config\ConfigManager;
 
 final class AlmasListener implements Listener
 {
@@ -46,13 +49,17 @@ final class AlmasListener implements Listener
                 return;
             }
 
-            if ($this->exist([$player->getName(), $player->getName()])) {
+            if ($this->exist([$damager->getName(), $player->getName()])) {
                 return;
             }
 
             $this->kills[$damager->getName()][] = $player->getName();
-            AlmaDeath::getAlmasManager()->addSoul($damager->getName());
-            $damager->sendMessage(PREFIX . "§ase ha agregado un alma a tu cuenta!");
+
+            $item = Item::get((int)AlmaDeath::$itemID[0], (int)AlmaDeath::$itemID[1]);
+            $item->setCustomName(ConfigManager::getPluginConfig()->get('AlmaHead')['name']);
+            $item->setLore([ConfigManager::getPluginConfig()->get('AlmaHead', "")['lore']]);
+            $item->getNamedTag()->setString('alma', 'alma');
+            $damager->getInventory()->addItem($item);
         }
     }
 
@@ -64,5 +71,20 @@ final class AlmasListener implements Listener
             }
         }
         return false;
+    }
+
+    public function PlayerInteractEvent(PlayerInteractEvent $event): void
+    {
+        $item = $event->getItem();
+        $player = $event->getPlayer();
+        $tag = $item->getNamedTag()->getString('alma', '');
+
+        if ($tag === 'alma') {
+            $item->setCount($item->getCount() - 1);
+            $player->getInventory()->setItemInHand($item);
+
+            AlmaDeath::getAlmasManager()->addSoul($player->getName());
+            $player->sendMessage(PREFIX . "§ase ha agregado un alma a tu cuenta!");
+        }
     }
 }
